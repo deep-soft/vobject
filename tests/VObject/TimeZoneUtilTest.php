@@ -401,7 +401,7 @@ HI;
 
         yield 'EDT' => [
             'origin' => 'EDT',
-            'expected' => 'America/New_York',
+            'expected' => 'America/Manaus',
         ];
     }
 }
