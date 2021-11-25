@@ -54,6 +54,81 @@ ChangeLog
 * #2 Fix bug in by year day
 * #3 Add daily occurrences to nextMonth and NextYear
 * #4 Enhance fast forward speed if no count value has been given
+=======
+4.4.0 (2021-11-15)
+------------------
+
+ #548: Allow easier extension of the timezone guessing (@heiglandreas)
+
+4.3.8 (2021-11-14)
+------------------
+
+* #538: fix EventIterator returns wrong end endTime (@floerke)
+* #541: Reordering of the attendees is not a significant change (@floerke)
+* #543: Reordering of vevent is not a significant change (@floerke)
+
+4.3.7 (2021-11-04)
+------------------
+
+* #551: version bump that was missed in 4.3.6 (@phil-davis)
+
+4.3.6 (2021-11-04)
+------------------
+
+* #544: Fix deprecated usages and return types on PHP 8.1 (@cedric-anne)
+
+4.3.5 (2021-02-12)
+------------------
+
+* #523: Fix setting properties with group assignment (@mstilkerich)
+* #532: Make use of until parameter in nextMonthly function (@jaircuevajunior)
+
+4.3.4 (2021-02-04)
+------------------
+
+* #529: Reassign modified date in yearly rrule (@laoneo)
+* #525: Add .gitattributes to reduce package size (@fezfez)
+
+4.3.3 (2020-11-09)
+------------------
+
+* #519: Remove US/Pacific-New obsolete timezone (@phil-davis)
+
+4.3.2 (2020-10-03)
+------------------
+
+* #513: Added Support for PHP 8.0 (@phil-davis)
+
+4.3.1 (2020-07-13)
+------------------
+
+* #510: Fix an incomplete phpdoc type annotation (@mstilkerich)
+* #505: Refactor unit test code for phpunit9 (@phil-davis)
+* #500: Standardize CI (@phil-davis)
+* #496: CI tooling changes (@JeroenVanOort)
+
+4.3.0 (2020-01-31)
+------------------
+
+* Added support for PHP 7.4, dropped support for PHP 7.0 (@phil-davis)
+* #487: Added phpstan coverage, updated testsuite for phpunit8 (@phil-davis, @JeroenVanOort)
+* #495: refactored maps to use ::class notation (@JeroenVanOort)
+
+4.2.2 (2020-01-14)
+------------------
+
+* #465: Add TZ in iTip REPLY iTip messages
+* #486: Add PHONE-NUMBER value type (used for TEL in vCard 3.0)
+
+4.2.1 (2019-12-18)
+------------------
+
+* #469, #451: fix compat with php 7.4
+* #443: prevent running in indefinite loop
+* #449: Preventing creating a component for a root document
+* #450: Fix parse with option Forgiving with trailing equal
+* #459: fixed typo in VCalendar which resulting in usage of the wrong TimeZone
+* #462: Broker::parseEventForOrganizer copies DTSTAMP from $eventInfo that causes broken scheduling
 
 4.2.0 (2019-02-19)
 ------------------
@@ -138,7 +213,7 @@ ChangeLog
 * #306: iTip REPLYs to the first instance of a recurring event was not handled
   correctly.
 * Slightly better error message during validation of `N` and `ADR` properties.
-* #312: Correctly extracing timezone in the iTip broker, even when we don't
+* #312: Correctly extracting timezone in the iTip broker, even when we don't
   have a master event. (@vkomrakov-sugar).
 * When validating a component's property that must appear once and which could
   automatically be repaired, make sure we report the change as 'repaired'.
@@ -460,7 +535,7 @@ ChangeLog
 * #114: VTIMEZONE is retained when generating new REQUEST objects.
 * #114: Support for 'MAILTO:' style email addresses (in uppercase) in the iTip
   broker. This improves evolution support.
-* #115: Using REQUEST-STATUS from REPLY messages and now propegating that into
+* #115: Using REQUEST-STATUS from REPLY messages and now propagating that into
   SCHEDULE-STATUS.
 
 
@@ -697,7 +772,7 @@ ChangeLog
 3.0.0-alpha2 (2013-05-22)
 -------------------------
 
-* Fixed: vCard URL properties were referencing a non-existant class.
+* Fixed: vCard URL properties were referencing a non-existent class.
 
 
 3.0.0-alpha1 (2013-05-21)
@@ -855,7 +930,7 @@ ChangeLog
   properties such as N, ADR, ORG and CATEGORIES.
 * Added: Splitter classes, that can split up large objects (such as exports)
   into individual objects (thanks @DominikTo and @armin-hackmann).
-* Added: VFREEBUSY component, which allows easily checking wether timeslots are
+* Added: VFREEBUSY component, which allows easily checking whether timeslots are
   available.
 * Added: The Reader class now has a 'FORGIVING' option, which allows it to parse
   properties with incorrect characters in the name (at this time, it just allows
