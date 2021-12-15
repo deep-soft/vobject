@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.7.0 (2021-12-15)
+------------------
+* #34 Merge upstream changes from sabre-io/vobject:4.4.0 into protonlabs/vobject
+
 4.6.1 (2021-11-04)
 ------------------
 * #29 Fix timezone name prefixed with /
@@ -54,81 +58,6 @@ ChangeLog
 * #2 Fix bug in by year day
 * #3 Add daily occurrences to nextMonth and NextYear
 * #4 Enhance fast forward speed if no count value has been given
-=======
-4.4.0 (2021-11-15)
-------------------
-
- #548: Allow easier extension of the timezone guessing (@heiglandreas)
-
-4.3.8 (2021-11-14)
-------------------
-
-* #538: fix EventIterator returns wrong end endTime (@floerke)
-* #541: Reordering of the attendees is not a significant change (@floerke)
-* #543: Reordering of vevent is not a significant change (@floerke)
-
-4.3.7 (2021-11-04)
-------------------
-
-* #551: version bump that was missed in 4.3.6 (@phil-davis)
-
-4.3.6 (2021-11-04)
-------------------
-
-* #544: Fix deprecated usages and return types on PHP 8.1 (@cedric-anne)
-
-4.3.5 (2021-02-12)
-------------------
-
-* #523: Fix setting properties with group assignment (@mstilkerich)
-* #532: Make use of until parameter in nextMonthly function (@jaircuevajunior)
-
-4.3.4 (2021-02-04)
-------------------
-
-* #529: Reassign modified date in yearly rrule (@laoneo)
-* #525: Add .gitattributes to reduce package size (@fezfez)
-
-4.3.3 (2020-11-09)
-------------------
-
-* #519: Remove US/Pacific-New obsolete timezone (@phil-davis)
-
-4.3.2 (2020-10-03)
-------------------
-
-* #513: Added Support for PHP 8.0 (@phil-davis)
-
-4.3.1 (2020-07-13)
-------------------
-
-* #510: Fix an incomplete phpdoc type annotation (@mstilkerich)
-* #505: Refactor unit test code for phpunit9 (@phil-davis)
-* #500: Standardize CI (@phil-davis)
-* #496: CI tooling changes (@JeroenVanOort)
-
-4.3.0 (2020-01-31)
-------------------
-
-* Added support for PHP 7.4, dropped support for PHP 7.0 (@phil-davis)
-* #487: Added phpstan coverage, updated testsuite for phpunit8 (@phil-davis, @JeroenVanOort)
-* #495: refactored maps to use ::class notation (@JeroenVanOort)
-
-4.2.2 (2020-01-14)
-------------------
-
-* #465: Add TZ in iTip REPLY iTip messages
-* #486: Add PHONE-NUMBER value type (used for TEL in vCard 3.0)
-
-4.2.1 (2019-12-18)
-------------------
-
-* #469, #451: fix compat with php 7.4
-* #443: prevent running in indefinite loop
-* #449: Preventing creating a component for a root document
-* #450: Fix parse with option Forgiving with trailing equal
-* #459: fixed typo in VCalendar which resulting in usage of the wrong TimeZone
-* #462: Broker::parseEventForOrganizer copies DTSTAMP from $eventInfo that causes broken scheduling
 
 4.2.0 (2019-02-19)
 ------------------
