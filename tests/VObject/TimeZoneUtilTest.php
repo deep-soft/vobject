@@ -8,8 +8,6 @@ class TimeZoneUtilTest extends TestCase
 {
     public function setUp(): void
     {
-        // clearning the tz cache
-        TimeZoneUtil::$map = null;
         TimeZoneUtil::clean();
     }
 
