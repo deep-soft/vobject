@@ -860,6 +860,12 @@ class RRuleIterator implements Iterator
                     (int) $currentMonth,
                     (int) $currentDayOfMonth
                 );
+
+                if ($this->currentDate->getTimestamp() > 253402300799) {
+                    $this->currentDate = null;
+
+                    return;
+                }
             }
 
             // If we made it here, it means we got a valid occurrence
