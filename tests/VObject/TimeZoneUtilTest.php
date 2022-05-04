@@ -496,4 +496,41 @@ HI;
             'expected' => 'Asia/Taipei',
         ];
     }
+
+    /**
+     * @dataProvider outlookCitiesProvider
+     */
+    public function testOutlookCities(string $origin, bool $failIfUncertain, string $expected)
+    {
+        $tz = TimeZoneUtil::getTimeZone($origin, null, $failIfUncertain);
+        $ex = new \DateTimeZone($expected);
+        $this->assertEquals($ex->getName(), $tz->getName());
+    }
+
+    public function outlookCitiesProvider(): iterable
+    {
+        yield 'case 1' => [
+            'origin' => 'TZID:(UTC+01:00) Bruxelles\, København\, Madrid\, Paris',
+            'failIfUncertain' => true,
+            'expected' => 'Europe/Madrid',
+        ];
+
+        yield 'case 2' => [
+            'origin' => 'TZID:(UTC+01:00) Bruxelles, København, Madrid, Paris',
+            'failIfUncertain' => true,
+            'expected' => 'Europe/Madrid',
+        ];
+
+        yield 'case 3' => [
+            'origin' => 'TZID:(UTC+01:00)Bruxelles\, København\, Madrid\, Paris',
+            'failIfUncertain' => true,
+            'expected' => 'Europe/Madrid',
+        ];
+
+        yield 'case 4' => [
+            'origin' => 'Bruxelles\, København\, Madrid\, Paris',
+            'failIfUncertain' => false,
+            'expected' => 'UTC',
+        ];
+    }
 }
