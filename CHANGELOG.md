@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.12.0 (2022-05-05)
+-------------------
+* #52 Add FindFromOutlookCities timezone finder 
+
 4.11.0 (2022-04-22)
 -------------------
 * #50 Add lowercase timezone finder 
