@@ -573,4 +573,87 @@ HI;
             'expected' => 'America/New_York',
         ];
     }
+
+    public function testCustomizedTimeZone()
+    {
+        $ics = <<<ICS
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ical.marudot.com//iCal Event Maker 
+X-WR-CALNAME:Victorian public holiday dates
+NAME:Victorian public holiday dates
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Customized Time Zone
+TZURL:http://tzurl.org/zoneinfo-outlook/Australia/Sydney
+X-LIC-LOCATION:Customized Time Zone
+BEGIN:STANDARD
+TZOFFSETFROM:+1100
+TZOFFSETTO:+1000
+TZNAME:AEST
+DTSTART:19700405T030000
+RRULE:FREQ=YEARLY;BYMONTH=4;BYDAY=1SU
+END:STANDARD
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+1000
+TZOFFSETTO:+1100
+TZNAME:AEDT
+DTSTART:19701004T020000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=1SU
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTAMP:20200907T032724Z
+UID:problematicTimezone@example.com
+DTSTART;TZID=Customized Time Zone:20210611T110000
+DTEND;TZID=Customized Time Zone:20210611T113000
+SUMMARY:customized time zone
+END:VEVENT
+END:VCALENDAR
+ICS;
+
+        $tz = TimeZoneUtil::getTimeZone('Customized Time Zone', Reader::read($ics));
+        $this->assertNotSame('Customized Time Zone', $tz->getName());
+        $start = new \DateTimeImmutable('2022-04-25');
+        $this->assertSame(10 * 60 * 60, $tz->getOffset($start));
+
+        $start = new \DateTimeImmutable('2022-11-10');
+        $this->assertSame(11 * 60 * 60, $tz->getOffset($start));
+    }
+
+    public function testCustomizedTimeZoneWithoutDaylight()
+    {
+        $ics = <<<ICS
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ical.marudot.com//iCal Event Maker
+X-WR-CALNAME:Victorian public holiday dates
+NAME:Victorian public holiday dates
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Customized Time Zone
+LAST-MODIFIED:20211207T194144Z
+X-LIC-LOCATION:Customized Time Zone
+BEGIN:STANDARD
+TZNAME:CST
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTAMP:20200907T032724Z
+UID:problematicTimezone@example.com
+DTSTART;TZID=Customized Time Zone:20210611T110000
+DTEND;TZID=Customized Time Zone:20210611T113000
+SUMMARY:customized time zone
+END:VEVENT
+END:VCALENDAR
+ICS;
+
+        $tz = TimeZoneUtil::getTimeZone('Customized Time Zone', Reader::read($ics));
+        $this->assertNotSame('Customized Time Zone', $tz->getName());
+        $start = new \DateTimeImmutable('2022-04-25');
+        $this->assertSame(8 * 60 * 60, $tz->getOffset($start));
+    }
 }

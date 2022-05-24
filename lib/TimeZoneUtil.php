@@ -12,6 +12,7 @@ use Sabre\VObject\TimezoneGuesser\FindFromTimezoneIdentifier;
 use Sabre\VObject\TimezoneGuesser\FindFromTimezoneMap;
 use Sabre\VObject\TimezoneGuesser\GuessFromLicEntry;
 use Sabre\VObject\TimezoneGuesser\GuessFromMsTzId;
+use Sabre\VObject\TimezoneGuesser\GuessFromCustomizedTimeZone;
 use Sabre\VObject\TimezoneGuesser\LowercaseTimezoneIdentifier;
 use Sabre\VObject\TimezoneGuesser\TimezoneFinder;
 use Sabre\VObject\TimezoneGuesser\TimezoneGuesser;
@@ -39,8 +40,9 @@ class TimeZoneUtil
 
     private function __construct()
     {
-        $this->addGuesser('lic', new GuessFromLicEntry());
         $this->addGuesser('msTzId', new GuessFromMsTzId());
+        $this->addGuesser('lic', new GuessFromLicEntry());
+        $this->addGuesser('customized', new GuessFromCustomizedTimeZone());
         $this->addFinder('tzid', new FindFromTimezoneIdentifier());
         $this->addFinder('tzmap', new FindFromTimezoneMap());
         $this->addFinder('offset', new FindFromOffset());
