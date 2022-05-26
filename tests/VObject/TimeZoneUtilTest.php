@@ -533,4 +533,29 @@ HI;
             'expected' => 'UTC',
         ];
     }
+
+    /**
+     * @dataProvider versionTzProvider
+     */
+    public function testVersionTz(string $origin, bool $failIfUncertain, string $expected)
+    {
+        $tz = TimeZoneUtil::getTimeZone($origin, null, $failIfUncertain);
+        $ex = new \DateTimeZone($expected);
+        $this->assertEquals($ex->getName(), $tz->getName());
+    }
+
+    public function versionTzProvider(): iterable
+    {
+        yield 'case 1' => [
+            'origin' => 'Eastern Standard Time 1',
+            'failIfUncertain' => true,
+            'expected' => 'America/New_York',
+        ];
+
+        yield 'case 2' => [
+            'origin' => 'Eastern Standard Time 2',
+            'failIfUncertain' => true,
+            'expected' => 'America/New_York',
+        ];
+    }
 }
