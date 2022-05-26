@@ -4,6 +4,7 @@ namespace Sabre\VObject;
 
 use DateTimeZone;
 use InvalidArgumentException;
+use Sabre\VObject\TimezoneGuesser\FindFromMzVersionTimezone;
 use Sabre\VObject\TimezoneGuesser\FindFromOffset;
 use Sabre\VObject\TimezoneGuesser\FindFromOutlookCities;
 use Sabre\VObject\TimezoneGuesser\FindFromTimezoneIdentifier;
@@ -44,6 +45,7 @@ class TimeZoneUtil
         $this->addFinder('offset', new FindFromOffset());
         $this->addFinder('lowercase', new LowercaseTimezoneIdentifier());
         $this->addFinder('outlookCities', new FindFromOutlookCities());
+        $this->addFinder('version', new FindFromMzVersionTimezone());
     }
 
     private static function getInstance(): self
