@@ -1,6 +1,11 @@
 ChangeLog
 =========
 
+4.13.0 (2022-05-27)
+-------------------
+* #56 Merge upstream changes from sabre-io/vobject@a595790 into protonlabs/vobject
+* #58 Handle version timezone
+
 4.12.0 (2022-05-05)
 -------------------
 * #52 Add FindFromOutlookCities timezone finder 
