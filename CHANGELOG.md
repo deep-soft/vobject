@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.14.0 (2022-05-31)
+-------------------
+* #54 Add FindFromOffsetName 
+
 4.13.0 (2022-05-27)
 -------------------
 * #56 Merge upstream changes from sabre-io/vobject@a595790 into protonlabs/vobject
