@@ -131,9 +131,9 @@ class DateTime extends Property
      *
      * @return \DateTimeImmutable
      */
-    public function getDateTime(DateTimeZone $timeZone = null)
+    public function getDateTime(DateTimeZone $timeZone = null, bool $activeCustomizedGuesser = true)
     {
-        $dt = $this->getDateTimes($timeZone);
+        $dt = $this->getDateTimes($timeZone, $activeCustomizedGuesser);
         if (!$dt) {
             return;
         }
@@ -153,13 +153,13 @@ class DateTime extends Property
      * @return \DateTimeImmutable[]
      * @return \DateTime[]
      */
-    public function getDateTimes(DateTimeZone $timeZone = null)
+    public function getDateTimes(DateTimeZone $timeZone = null, bool $activeCustomizedGuesser = true)
     {
         // Does the property have a TZID?
         $tzid = $this['TZID'];
 
         if ($tzid) {
-            $timeZone = TimeZoneUtil::getTimeZone((string) $tzid, $this->root, true);
+            $timeZone = TimeZoneUtil::getTimeZone((string) $tzid, $this->root, true, $activeCustomizedGuesser);
         }
 
         $dts = [];

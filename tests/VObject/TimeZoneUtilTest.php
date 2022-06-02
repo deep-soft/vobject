@@ -623,7 +623,24 @@ ICS;
 
     public function testCustomizedTimeZoneWithoutDaylight()
     {
-        $ics = <<<ICS
+        $ics = $this->getCustomizedICS();
+        $tz = TimeZoneUtil::getTimeZone('Customized Time Zone', Reader::read($ics));
+        $this->assertNotSame('Customized Time Zone', $tz->getName());
+        $start = new \DateTimeImmutable('2022-04-25');
+        $this->assertSame(8 * 60 * 60, $tz->getOffset($start));
+    }
+
+    public function testCustomizedTimeZoneFlag()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $ics = $this->getCustomizedICS();
+        $vobject = Reader::read($ics);
+        $vobject->VEVENT->DTSTART->getDateTime(null, false);
+    }
+
+    private function getCustomizedICS(): string
+    {
+        return <<<ICS
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//ical.marudot.com//iCal Event Maker
@@ -650,10 +667,5 @@ SUMMARY:customized time zone
 END:VEVENT
 END:VCALENDAR
 ICS;
-
-        $tz = TimeZoneUtil::getTimeZone('Customized Time Zone', Reader::read($ics));
-        $this->assertNotSame('Customized Time Zone', $tz->getName());
-        $start = new \DateTimeImmutable('2022-04-25');
-        $this->assertSame(8 * 60 * 60, $tz->getOffset($start));
     }
 }

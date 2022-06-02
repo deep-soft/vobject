@@ -40,9 +40,8 @@ class TimeZoneUtil
 
     private function __construct()
     {
-        $this->addGuesser('msTzId', new GuessFromMsTzId());
         $this->addGuesser('lic', new GuessFromLicEntry());
-        $this->addGuesser('customized', new GuessFromCustomizedTimeZone());
+        $this->addGuesser('msTzId', new GuessFromMsTzId());
         $this->addFinder('tzid', new FindFromTimezoneIdentifier());
         $this->addFinder('tzmap', new FindFromTimezoneMap());
         $this->addFinder('offset', new FindFromOffset());
@@ -85,7 +84,7 @@ class TimeZoneUtil
      * Alternatively, if $failIfUncertain is set to true, it will throw an
      * exception if we cannot accurately determine the timezone.
      */
-    private function findTimeZone(string $tzid, Component $vcalendar = null, bool $failIfUncertain = false): DateTimeZone
+    private function findTimeZone(string $tzid, Component $vcalendar = null, bool $failIfUncertain = false, bool $activeCustomizedGuesser = false): DateTimeZone
     {
         foreach ($this->timezoneFinders as $timezoneFinder) {
             $timezone = $timezoneFinder->find($tzid, $failIfUncertain);
@@ -96,11 +95,21 @@ class TimeZoneUtil
             return $timezone;
         }
 
+        if (!$activeCustomizedGuesser) {
+            unset($this->timezoneGuessers['customized']);
+        }
+
         if ($vcalendar) {
+            // We temporary add the customized timezone guesser if needed
+            $guessers = $this->timezoneGuessers;
+            if ($activeCustomizedGuesser) {
+                $guessers[] = new GuessFromCustomizedTimeZone();
+            }
+
             // If that didn't work, we will scan VTIMEZONE objects
             foreach ($vcalendar->select('VTIMEZONE') as $vtimezone) {
                 if ((string) $vtimezone->TZID === $tzid) {
-                    foreach ($this->timezoneGuessers as $timezoneGuesser) {
+                    foreach ($guessers as $timezoneGuesser) {
                         $timezone = $timezoneGuesser->guess($vtimezone, $failIfUncertain);
                         if (!$timezone instanceof DateTimeZone) {
                             continue;
@@ -136,9 +145,9 @@ class TimeZoneUtil
      *
      * @return DateTimeZone
      */
-    public static function getTimeZone($tzid, Component $vcalendar = null, $failIfUncertain = false)
+    public static function getTimeZone($tzid, Component $vcalendar = null, $failIfUncertain = false, bool $activeCustomizedGuesser = true)
     {
-        return self::getInstance()->findTimeZone($tzid, $vcalendar, $failIfUncertain);
+        return self::getInstance()->findTimeZone($tzid, $vcalendar, $failIfUncertain, $activeCustomizedGuesser);
     }
 
     public static function clean(): void
