@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.15.0 (2022-06-23)
+-------------------
+* #57 Handle customized timezone
+
 4.14.0 (2022-05-31)
 -------------------
 * #54 Add FindFromOffsetName 
