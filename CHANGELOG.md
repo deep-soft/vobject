@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.16.0 (2022-07-06)
+-------------------
+* #63 Fix customized timezone guesser
+
 4.15.0 (2022-06-23)
 -------------------
 * #57 Handle customized timezone
