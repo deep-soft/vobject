@@ -625,7 +625,7 @@ ICS;
     {
         $ics = $this->getCustomizedICS();
         $tz = TimeZoneUtil::getTimeZone('Customized Time Zone', Reader::read($ics));
-        $this->assertNotSame('Customized Time Zone', $tz->getName());
+        $this->assertSame('Asia/Brunei', $tz->getName());
         $start = new \DateTimeImmutable('2022-04-25');
         $this->assertSame(8 * 60 * 60, $tz->getOffset($start));
     }

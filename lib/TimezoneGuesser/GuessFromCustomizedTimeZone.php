@@ -21,9 +21,17 @@ class GuessFromCustomizedTimeZone implements TimezoneGuesser
         $timezones = DateTimeZone::listIdentifiers();
         $standard = $vtimezone->STANDARD;
         $daylight = $vtimezone->DAYLIGHT;
+        if (!$standard) {
+            return null;
+        }
 
-        $standardOffset = $standard->TZOFFSETTO->getValue();
-        $standardRRule = $daylight ? $standard->RRULE->getValue() : 'FREQ=DAILY';
+        $standardOffset = $standard->TZOFFSETTO;
+        if (!$standardOffset) {
+            return null;
+        }
+        $standardOffset = $standardOffset->getValue();
+
+        $standardRRule = $standard->RRULE ? $standard->RRULE->getValue() : 'FREQ=DAILY';
         // The guess will not be perfectly matched since we use the timezone data of the current year
         // It might be wrong if the timezone data changed in the past
         $year = (new DateTimeImmutable('now'))->format('Y');
@@ -31,8 +39,11 @@ class GuessFromCustomizedTimeZone implements TimezoneGuesser
         $standardIterator = new RRuleIterator($standardRRule, $start);
         $standardIterator->next();
 
+        if ($daylight && !$daylight->TZOFFSETTO) {
+            $daylight = null;
+        }
         $daylightOffset = $daylight ? $daylight->TZOFFSETTO->getValue() : '';
-        $daylightRRule = $daylight ? $daylight->RRULE->getValue() : '';
+        $daylightRRule = $daylight ? ($daylight->RRULE ? $daylight->RRULE->getValue() : 'FREQ=DAILY') : '';
         $daylightIterator = $daylight ? new RRuleIterator($daylightRRule, $standardIterator->current()) : null;
         $daylightIterator && $daylightIterator->next();
 
