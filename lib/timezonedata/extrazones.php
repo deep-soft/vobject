@@ -75,7 +75,7 @@ return [
     'Goose Bay' => 'America/Goose_Bay',
     'Greenland Central' => 'America/Scoresbysund',
     'Greenland Eastern' => 'America/Scoresbysund',
-    'Greenland Western' => 'America/Godthab',
+    'Greenland Western' => 'Atlantic/Stanley',
     'Guam' => 'Pacific/Guam',
     'Gulf' => 'Asia/Dubai',
     'Guyana' => 'America/Guyana',
@@ -201,4 +201,5 @@ return [
     'Asia/Kashgar' => 'Asia/Urumqi',
     'Pacific/Johnston' => 'Pacific/Honolulu',
     'EDT' => 'America/Manaus',
+    'America/Godthab' => 'Atlantic/Stanley',
 ];
