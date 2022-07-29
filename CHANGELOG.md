@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.17.0 (2022-07-29)
+-------------------
+* #65 [Calendar] Replace Godthab timezone 
+
 4.16.0 (2022-07-06)
 -------------------
 * #63 Fix customized timezone guesser
