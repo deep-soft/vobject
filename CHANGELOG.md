@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.18.0 (2022-09-01)
+-------------------
+* #69 Add mapping for CDT timezone
+
 4.17.0 (2022-07-29)
 -------------------
 * #65 [Calendar] Replace Godthab timezone 
