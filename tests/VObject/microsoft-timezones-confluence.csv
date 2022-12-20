@@ -338,7 +338,7 @@ paraguay standard time,America/Asuncion,America/Asuncion,FALSE
 "perth, western australia",Australia/Perth,Australia/Perth,FALSE
 peru,America/Lima,America/Lima,FALSE
 philippines,Asia/Manila,Asia/Manila,FALSE
-phoenix islands,Pacific/Enderbury,Pacific/Enderbury,FALSE
+phoenix islands,Pacific/Fakaofo,Pacific/Fakaofo,FALSE
 pierre miquelon,America/Miquelon,America/Miquelon,FALSE
 pitcairn,Pacific/Pitcairn,Pacific/Pitcairn,FALSE
 "prague, central europe",Europe/Prague,Europe/Prague,FALSE
@@ -541,7 +541,7 @@ norfolk island,Pacific/Norfolk,,TRUE
 coordinated universal time+12,Pacific/Tarawa,,TRUE
 petropavlovsk-kamchatsky - old,Asia/Anadyr,,TRUE
 chatham islands,Pacific/Chatham,,TRUE
-coordinated universal time+13,Pacific/Enderbury,,TRUE
+coordinated universal time+13,Pacific/Fakaofo,,TRUE
 nuku'alofa,Pacific/Tongatapu,,TRUE
 kiritimati island,Pacific/Kiritimati,,TRUE
 "helsinki, kyiv, riga, sofia, tallinn, vilnius",Europe/Helsinki,,TRUE

@@ -133,7 +133,7 @@ return [
     'Paraguay' => 'America/Asuncion',
     'Peru' => 'America/Lima',
     'Philippines' => 'Asia/Manila',
-    'Phoenix Islands' => 'Pacific/Enderbury',
+    'Phoenix Islands' => 'Pacific/Fakaofo',
     'Pierre Miquelon' => 'America/Miquelon',
     'Pitcairn' => 'Pacific/Pitcairn',
     'Pyongyang' => 'Asia/Pyongyang',
