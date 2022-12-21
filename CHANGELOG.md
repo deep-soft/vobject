@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.19.0 (2022-12-21)
+-------------------
+* #72 Deprecate Enderbury timezone
+
 4.18.0 (2022-09-01)
 -------------------
 * #69 Add mapping for CDT timezone
