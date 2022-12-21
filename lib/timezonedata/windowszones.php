@@ -232,7 +232,7 @@ return [
   'coordinated universal time+12' => 'Pacific/Tarawa',
   'petropavlovsk-kamchatsky - old' => 'Asia/Anadyr',
   'chatham islands' => 'Pacific/Chatham',
-  'coordinated universal time+13' => 'Pacific/Enderbury',
+  'coordinated universal time+13' => 'Pacific/Fakaofo',
   "nuku'alofa" => 'Pacific/Tongatapu',
   'kiritimati island' => 'Pacific/Kiritimati',
   'helsinki, kyiv, riga, sofia, tallinn, vilnius' => 'Europe/Helsinki',
