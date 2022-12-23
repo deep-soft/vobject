@@ -14,7 +14,7 @@ class GuessFromCustomizedTimeZone implements TimezoneGuesser
 {
     public function guess(VTimeZone $vtimezone, bool $failIfUncertain = false): ?DateTimeZone
     {
-        if ($vtimezone->TZID->getValue() !== 'Customized Time Zone') {
+        if (null === $vtimezone->TZID || $vtimezone->TZID->getValue() !== 'Customized Time Zone') {
             return null;
         }
 
