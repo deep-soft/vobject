@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.20.0 (2022-12-23)
+-------------------
+* #74 Handle null tzid
+
 4.19.0 (2022-12-21)
 -------------------
 * #72 Deprecate Enderbury timezone
