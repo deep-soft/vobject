@@ -439,6 +439,11 @@ HI;
             'expected' => 'America/Chicago',
         ];
 
+        yield 'PST' => [
+            'origin' => 'PST',
+            'expected' => 'America/Los_Angeles',
+        ];
+
         if (($handle = fopen(__DIR__ . "/microsoft-timezones-confluence.csv", "r")) !== FALSE) {
             $data = fgetcsv($handle);
             while (($data = fgetcsv($handle)) !== FALSE) {
