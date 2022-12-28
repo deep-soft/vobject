@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.21.0 (2022-12-28)
+-------------------
+* #76 Add mapping for PST timezone
+
 4.20.0 (2022-12-23)
 -------------------
 * #74 Handle null tzid
