@@ -203,4 +203,5 @@ return [
     'EDT' => 'America/Manaus',
     'America/Godthab' => 'Atlantic/Stanley',
     'CDT' => 'America/Chicago',
+    'PST' => 'America/Los_Angeles',
 ];
