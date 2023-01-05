@@ -190,6 +190,11 @@ HI;
     public function testTimeZoneIdentifiers($tzid)
     {
         $tz = TimeZoneUtil::getTimeZone($tzid);
+
+        $priorityZones = $this->getPriorityTimeZoneIdentifiers();
+        if (isset($priorityZones[$tzid])) {
+            $tzid = $priorityZones[$tzid];
+        }
         $ex = new \DateTimeZone($tzid);
 
         $this->assertEquals($ex->getName(), $tz->getName());
@@ -214,6 +219,14 @@ HI;
                 return [$value];
             },
             \DateTimeZone::listIdentifiers()
+        );
+    }
+
+    public function getPriorityTimeZoneIdentifiers()
+    {
+        // PHPUNit requires an array of arrays
+        return array_merge(
+            include __DIR__.'/../../lib/timezonedata/priorityzones.php',
         );
     }
 
@@ -442,6 +455,21 @@ HI;
         yield 'PST' => [
             'origin' => 'PST',
             'expected' => 'America/Los_Angeles',
+        ];
+
+        yield 'Pacific/Kanton' => [
+            'origin' => 'Pacific/Kanton',
+            'expected' => 'Pacific/Fakaofo',
+        ];
+
+        yield 'UTC+13' => [
+            'origin' => 'UTC+13',
+            'expected' => 'Pacific/Fakaofo',
+        ];
+
+        yield 'Pacific/Enderbury' => [
+            'origin' => 'Pacific/Enderbury',
+            'expected' => 'Pacific/Fakaofo',
         ];
 
         if (($handle = fopen(__DIR__ . "/microsoft-timezones-confluence.csv", "r")) !== FALSE) {

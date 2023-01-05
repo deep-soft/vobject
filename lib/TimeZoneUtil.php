@@ -8,6 +8,7 @@ use Sabre\VObject\TimezoneGuesser\FindFromMzVersionTimezone;
 use Sabre\VObject\TimezoneGuesser\FindFromOffset;
 use Sabre\VObject\TimezoneGuesser\FindFromOffsetName;
 use Sabre\VObject\TimezoneGuesser\FindFromOutlookCities;
+use Sabre\VObject\TimezoneGuesser\FindFromPriorityTimezoneMap;
 use Sabre\VObject\TimezoneGuesser\FindFromTimezoneIdentifier;
 use Sabre\VObject\TimezoneGuesser\FindFromTimezoneMap;
 use Sabre\VObject\TimezoneGuesser\GuessFromLicEntry;
@@ -42,6 +43,7 @@ class TimeZoneUtil
     {
         $this->addGuesser('lic', new GuessFromLicEntry());
         $this->addGuesser('msTzId', new GuessFromMsTzId());
+        $this->addFinder('priorityzones', new FindFromPriorityTimezoneMap());
         $this->addFinder('tzid', new FindFromTimezoneIdentifier());
         $this->addFinder('tzmap', new FindFromTimezoneMap());
         $this->addFinder('offset', new FindFromOffset());
