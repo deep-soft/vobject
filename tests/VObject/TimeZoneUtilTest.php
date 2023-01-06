@@ -184,6 +184,22 @@ HI;
         $this->assertEquals($ex->getName(), $tz->getName());
     }
 
+    public function testDeprecatedTimeZone()
+    {
+        // Deprecated in 2022b
+        $tz = TimeZoneUtil::getTimeZone('Europe/Kiev');
+        $ex = new \DateTimeZone('Europe/Kiev');
+        $this->assertSame($ex->getName(), $tz->getName());
+    }
+
+    public function testDeprecatedUnsupportedTimeZone()
+    {
+        // Deprecated and unsupported
+        $tz = TimeZoneUtil::getTimeZone('America/Godthab');
+        $ex = new \DateTimeZone('America/Godthab');
+        $this->assertNotSame($ex->getName(), $tz->getName());
+    }
+
     /**
      * @dataProvider getPHPTimeZoneIdentifiers
      */
