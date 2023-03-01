@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.22.0 (2023-03-01)
+-------------------
+* #80 Allow newly deprecated timezones
+
 4.21.0 (2022-12-28)
 -------------------
 * #76 Add mapping for PST timezone
