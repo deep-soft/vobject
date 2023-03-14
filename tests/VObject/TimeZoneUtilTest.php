@@ -229,7 +229,10 @@ HI;
             function ($value) {
                 return [$value];
             },
-            \DateTimeZone::listIdentifiers()
+            // FIXME remove the filter after finishing timezone migration
+            array_filter(\DateTimeZone::listIdentifiers(), static function (string $timezone) {
+                return $timezone !== 'Europe/Kyiv';
+            })
         );
     }
 
@@ -242,6 +245,12 @@ HI;
             },
             include __DIR__.'/../../lib/timezonedata/php-bc.php'
         );
+    }
+
+    public function testKyivTimezone()
+    {
+
+        $this->assertSame('Europe/Kiev', TimeZoneUtil::getTimeZone('Europe/Kyiv')->getName());
     }
 
     public function testTimezoneOffset()
