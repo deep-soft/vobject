@@ -21,7 +21,7 @@ return [
     'Brussels, Copenhagen, Madrid, Paris' => 'Europe/Paris',
     'Paris, Madrid, Brussels, Copenhagen' => 'Europe/Paris',
     'Prague, Central Europe' => 'Europe/Prague',
-    'Sarajevo, Skopje, Sofija, Vilnius, Warsaw, Zagreb' => 'Europe/Vilnius',
+    'Sarajevo, Skopje, Sofija, Vilnius, Warsaw, Zagreb' => 'Europe/Sofia',
     'West Central Africa' => 'Africa/Lagos', // This was a best guess
     'Athens, Istanbul, Minsk' => 'Europe/Athens',
     'Bucharest' => 'Europe/Bucharest',
