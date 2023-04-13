@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.23.0 (2023-04-13)
+-------------------
+* #82 Modify TZID value for migration timezones 
+
 4.22.0 (2023-03-01)
 -------------------
 * #80 Allow newly deprecated timezones
