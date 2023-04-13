@@ -12,6 +12,10 @@ use Exception;
  */
 class FindFromTimezoneIdentifier implements TimezoneFinder
 {
+    public const MIGRATION_TIMEZONES = [
+        'Europe/Kyiv' => 'Europe/Kiev',
+    ];
+
     public function find(string $tzid, bool $failIfUncertain = false): ?DateTimeZone
     {
         // First we will just see if the tzid is a support timezone identifier.
@@ -35,6 +39,10 @@ class FindFromTimezoneIdentifier implements TimezoneFinder
         // If the timezone is prefixed with a slash we remove the slash for lookup in the maps.
         if ('/' === $tzid[0]) {
             $tzid = substr($tzid, 1);
+        }
+
+        if (isset(self::MIGRATION_TIMEZONES[$tzid])) {
+            $tzid = self::MIGRATION_TIMEZONES[$tzid];
         }
 
         // PHP has a bug that logs PHP warnings even it shouldn't:
