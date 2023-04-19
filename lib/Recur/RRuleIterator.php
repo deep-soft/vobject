@@ -2,8 +2,6 @@
 
 namespace Sabre\VObject\Recur;
 
-use DateTimeInterface;
-use Iterator;
 use Sabre\VObject\DateTimeParser;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\Property;
@@ -21,14 +19,23 @@ use Sabre\VObject\Property;
  * @author Evert Pot (http://evertpot.com/)
  * @license http://sabre.io/license/ Modified BSD License
  */
-class RRuleIterator implements Iterator
+class RRuleIterator implements \Iterator
 {
+    /**
+     * Constant denoting the upper limit on how long into the future
+     * we want to iterate. The value is a unix timestamp and currently
+     * corresponds to the datetime 9999-12-31 11:59:59 UTC.
+     */
+    public const dateUpperLimit = 253402300799;
+
     /**
      * Creates the Iterator.
      *
      * @param string|array $rrule
+     *
+     * @throws InvalidDataException
      */
-    public function __construct($rrule, DateTimeInterface $start)
+    public function __construct($rrule, \DateTimeInterface $start)
     {
         $this->startDate = $start;
         $this->parseRRule($rrule);
@@ -38,10 +45,10 @@ class RRuleIterator implements Iterator
     /* Implementation of the Iterator interface {{{ */
 
     #[\ReturnTypeWillChange]
-    public function current()
+    public function current(): ?\DateTimeInterface
     {
         if (!$this->valid()) {
-            return;
+            return null;
         }
 
         return clone $this->currentDate;
@@ -49,11 +56,9 @@ class RRuleIterator implements Iterator
 
     /**
      * Returns the current item number.
-     *
-     * @return int
      */
     #[\ReturnTypeWillChange]
-    public function key()
+    public function key(): int
     {
         return $this->counter;
     }
@@ -62,11 +67,9 @@ class RRuleIterator implements Iterator
      * Returns whether the current item is a valid item for the recurrence
      * iterator. This will return false if we've gone beyond the UNTIL or COUNT
      * statements.
-     *
-     * @return bool
      */
     #[\ReturnTypeWillChange]
-    public function valid()
+    public function valid(): bool
     {
         if (null === $this->currentDate) {
             return false;
@@ -80,11 +83,9 @@ class RRuleIterator implements Iterator
 
     /**
      * Resets the iterator.
-     *
-     * @return void
      */
     #[\ReturnTypeWillChange]
-    public function rewind()
+    public function rewind(): void
     {
         $this->currentDate = clone $this->startDate;
         $this->counter = 0;
@@ -92,12 +93,9 @@ class RRuleIterator implements Iterator
 
     /**
      * Goes on to the next iteration.
-     *
-     * @param int $amount
-     * @return void
      */
     #[\ReturnTypeWillChange]
-    public function next(int $amount = 1)
+    public function next(int $amount = 1): void
     {
         // Otherwise, we find the next event in the normal RRULE
         // sequence.
@@ -105,15 +103,19 @@ class RRuleIterator implements Iterator
             case 'hourly':
                 $this->nextHourly($amount);
                 break;
+
             case 'daily':
                 $this->nextDaily($amount);
                 break;
+
             case 'weekly':
                 $this->nextWeekly($amount);
                 break;
+
             case 'monthly':
                 $this->nextMonthly($amount);
                 break;
+
             case 'yearly':
                 $this->nextYearly($amount);
                 break;
@@ -125,10 +127,8 @@ class RRuleIterator implements Iterator
 
     /**
      * Returns true if this recurring event never ends.
-     *
-     * @return bool
      */
-    public function isInfinite()
+    public function isInfinite(): bool
     {
         return !$this->count && !$this->until;
     }
@@ -137,7 +137,7 @@ class RRuleIterator implements Iterator
      * This method allows you to quickly go to the next occurrence after the
      * specified date.
      */
-    public function fastForward(DateTimeInterface $dt)
+    public function fastForward(\DateTimeInterface $dt): void
     {
         // We don't do any jumps if we have a count limit as we have to keep track of the number of occurrences
         if (!isset($this->count)) {
@@ -152,7 +152,7 @@ class RRuleIterator implements Iterator
     /**
      * This method allows you to quickly go to the next occurrence before the specified date.
      */
-    public function fastForwardBefore(DateTimeInterface $dt)
+    public function fastForwardBefore(\DateTimeInterface $dt): void
     {
         $hasCount = isset($this->count);
 
@@ -176,7 +176,7 @@ class RRuleIterator implements Iterator
     /**
      * This method allows you to quickly go to the last occurrence.
      */
-    public function fastForwardToEnd()
+    public function fastForwardToEnd(): void
     {
         if ($this->isInfinite()) {
             throw new \LogicException('Cannot fast forward to the end an infinite event.');
@@ -302,86 +302,66 @@ class RRuleIterator implements Iterator
      * The reference start date/time for the rrule.
      *
      * All calculations are based on this initial date.
-     *
-     * @var DateTimeInterface
      */
-    protected $startDate;
+    protected \DateTimeInterface $startDate;
 
     /**
      * The date of the current iteration. You can get this by calling
      * ->current().
-     *
-     * @var DateTimeInterface
      */
-    protected $currentDate;
+    protected ?\DateTimeInterface $currentDate;
 
     /**
      * Frequency is one of: secondly, minutely, hourly, daily, weekly, monthly,
      * yearly.
-     *
-     * @var string
      */
-    protected $frequency;
+    protected string $frequency;
 
     /**
      * The number of recurrences, or 'null' if infinitely recurring.
-     *
-     * @var int
      */
-    protected $count;
+    protected ?int $count = null;
 
     /**
      * The interval.
      *
      * If for example frequency is set to daily, interval = 2 would mean every
      * 2 days.
-     *
-     * @var int
      */
-    protected $interval = 1;
+    protected int $interval = 1;
 
     /**
      * The last instance of this recurrence, inclusively.
-     *
-     * @var DateTimeInterface|null
      */
-    protected $until;
+    protected ?\DateTimeInterface $until = null;
 
     /**
      * Which seconds to recur.
      *
      * This is an array of integers (between 0 and 60)
-     *
-     * @var array
      */
-    protected $bySecond;
+    protected ?array $bySecond = null;
 
     /**
      * Which minutes to recur.
      *
      * This is an array of integers (between 0 and 59)
-     *
-     * @var array
      */
-    protected $byMinute;
+    protected ?array $byMinute = null;
 
     /**
      * Which hours to recur.
      *
      * This is an array of integers (between 0 and 23)
-     *
-     * @var array
      */
-    protected $byHour;
+    protected ?array $byHour = null;
 
     /**
      * The current item in the list.
      *
      * You can get this number with the key() method.
-     *
-     * @var int
      */
-    protected $counter = 0;
+    protected int $counter = 0;
 
     /**
      * Which weekdays to recur.
@@ -392,20 +372,16 @@ class RRuleIterator implements Iterator
      * this indicates the nth occurrence of a specific day within the monthly or
      * yearly rrule. For instance, -2TU indicates the second-last tuesday of
      * the month, or year.
-     *
-     * @var array
      */
-    protected $byDay;
+    protected ?array $byDay = null;
 
     /**
      * Which days of the month to recur.
      *
      * This is an array of days of the months (1-31). The value can also be
      * negative. -5 for instance means the 5th last day of the month.
-     *
-     * @var array
      */
-    protected $byMonthDay;
+    protected ?array $byMonthDay = null;
 
     /**
      * Which days of the year to recur.
@@ -413,29 +389,23 @@ class RRuleIterator implements Iterator
      * This is an array with days of the year (1 to 366). The values can also
      * be negative. For instance, -1 will always represent the last day of the
      * year. (December 31st).
-     *
-     * @var array
      */
-    protected $byYearDay;
+    protected ?array $byYearDay = null;
 
     /**
      * Which week numbers to recur.
      *
      * This is an array of integers from 1 to 53. The values can also be
      * negative. -1 will always refer to the last week of the year.
-     *
-     * @var array
      */
-    protected $byWeekNo;
+    protected ?array $byWeekNo = null;
 
     /**
      * Which months to recur.
      *
      * This is an array of integers from 1 to 12.
-     *
-     * @var array
      */
-    protected $byMonth;
+    protected ?array $byMonth = null;
 
     /**
      * Which items in an existing st to recur.
@@ -448,24 +418,20 @@ class RRuleIterator implements Iterator
      *
      * This would be done by setting frequency to 'monthly', byDay to
      * 'MO,TU,WE,TH,FR' and bySetPos to -1.
-     *
-     * @var array
      */
-    protected $bySetPos;
+    protected ?array $bySetPos = null;
 
     /**
      * When the week starts.
-     *
-     * @var string
      */
-    protected $weekStart = 'MO';
+    protected string $weekStart = 'MO';
 
     /* Functions that advance the iterator {{{ */
 
     /**
      * Does the processing for advancing the iterator for hourly frequency.
      */
-    protected function nextHourly($amount = 1)
+    protected function nextHourly(int $amount = 1): void
     {
         $this->currentDate = $this->currentDate->modify('+'.$amount * $this->interval.' hours');
     }
@@ -473,7 +439,7 @@ class RRuleIterator implements Iterator
     /**
      * Does the processing for advancing the iterator for daily frequency.
      */
-    protected function nextDaily($amount = 1)
+    protected function nextDaily(int $amount = 1): void
     {
         if (!$this->byHour && !$this->byDay) {
             $this->currentDate = $this->currentDate->modify('+'.$amount * $this->interval.' days');
@@ -518,6 +484,12 @@ class RRuleIterator implements Iterator
 
             // Current hour of the day
             $currentHour = $this->currentDate->format('G');
+
+            if ($this->currentDate->getTimestamp() > self::dateUpperLimit) {
+                $this->currentDate = null;
+
+                return;
+            }
         } while (
             ($this->byDay && !in_array($currentDay, $recurrenceDays)) ||
             ($this->byHour && !in_array($currentHour, $recurrenceHours)) ||
@@ -528,7 +500,7 @@ class RRuleIterator implements Iterator
     /**
      * Does the processing for advancing the iterator for weekly frequency.
      */
-    protected function nextWeekly($amount = 1)
+    protected function nextWeekly(int $amount = 1): void
     {
         if (!$this->byHour && !$this->byDay) {
             $this->currentDate = $this->currentDate->modify('+'.($amount * $this->interval).' weeks');
@@ -579,8 +551,10 @@ class RRuleIterator implements Iterator
 
     /**
      * Does the processing for advancing the iterator for monthly frequency.
+     *
+     * @throws \Exception
      */
-    protected function nextMonthly($amount = 1)
+    protected function nextMonthly(int $amount = 1): void
     {
         $currentDayOfMonth = $this->currentDate->format('j');
         $currentHourOfMonth = $this->currentDate->format('G');
@@ -668,7 +642,7 @@ class RRuleIterator implements Iterator
 
             // To prevent running this forever (better: until we hit the max date of DateTimeImmutable) we simply
             // stop at 9999-12-31. Looks like the year 10000 problem is not solved in php ....
-            if ($this->currentDate->getTimestamp() > 253402300799) {
+            if ($this->currentDate->getTimestamp() > self::dateUpperLimit) {
                 $this->currentDate = null;
 
                 return;
@@ -685,7 +659,7 @@ class RRuleIterator implements Iterator
     /**
      * Does the processing for advancing the iterator for yearly frequency.
      */
-    protected function nextYearly($amount = 1)
+    protected function nextYearly(int $amount = 1): void
     {
         $currentYear = $this->currentDate->format('Y');
         $currentMonth = $this->currentDate->format('n');
@@ -860,6 +834,14 @@ class RRuleIterator implements Iterator
                     (int) $currentMonth,
                     (int) $currentDayOfMonth
                 );
+
+                // To prevent running this forever (better: until we hit the max date of DateTimeImmutable) we simply
+                // stop at 9999-12-31. Looks like the year 10000 problem is not solved in php ....
+                if ($this->currentDate->getTimestamp() > self::dateUpperLimit) {
+                    $this->currentDate = null;
+
+                    return;
+                }
             }
 
             // If we made it here, it means we got a valid occurrence
@@ -897,8 +879,10 @@ class RRuleIterator implements Iterator
      * class with all the values.
      *
      * @param string|array $rrule
+     *
+     * @throws InvalidDataException
      */
-    protected function parseRRule($rrule)
+    protected function parseRRule($rrule): void
     {
         if (is_string($rrule)) {
             $rrule = Property\ICalendar\Recur::stringToArray($rrule);
@@ -1039,10 +1023,8 @@ class RRuleIterator implements Iterator
 
     /**
      * Mappings between the day number and english day name.
-     *
-     * @var array
      */
-    protected $dayNames = [
+    protected array $dayNames = [
         0 => 'Sunday',
         1 => 'Monday',
         2 => 'Tuesday',
@@ -1059,9 +1041,9 @@ class RRuleIterator implements Iterator
      * The returned list is an array of arrays with as first element the day of month (1-31);
      *  the hour; the minute and second of the occurence
      *
-     * @return array
+     * @throws \Exception
      */
-    protected function getMonthlyOccurrences()
+    protected function getMonthlyOccurrences(): array
     {
         $startDate = clone $this->currentDate;
 
@@ -1110,7 +1092,7 @@ class RRuleIterator implements Iterator
                     }
                 } else {
                     // There was no counter (first, second, last wednesdays), so we
-                    // just need to add the all to the list).
+                    // just need to add the all to the list.
                     $byDayResults = array_merge($byDayResults, $dayHits);
                 }
             }
@@ -1189,7 +1171,7 @@ class RRuleIterator implements Iterator
      *
      * @return array an array of arrays with the day of the month, hours, minute and seconds of the occurence
      */
-    protected function addDailyOccurences(array $result)
+    protected function addDailyOccurences(array $result): array
     {
         $output = [];
         $hour = (int) $this->currentDate->format('G');
@@ -1213,10 +1195,8 @@ class RRuleIterator implements Iterator
 
     /**
      * Simple mapping from iCalendar day names to day numbers.
-     *
-     * @var array
      */
-    protected $dayMap = [
+    protected array $dayMap = [
         'SU' => 0,
         'MO' => 1,
         'TU' => 2,
@@ -1226,7 +1206,7 @@ class RRuleIterator implements Iterator
         'SA' => 6,
     ];
 
-    protected function getHours()
+    protected function getHours(): array
     {
         $recurrenceHours = [];
         foreach ($this->byHour as $byHour) {
@@ -1236,7 +1216,7 @@ class RRuleIterator implements Iterator
         return $recurrenceHours;
     }
 
-    protected function getDays()
+    protected function getDays(): array
     {
         $recurrenceDays = [];
         foreach ($this->byDay as $byDay) {
@@ -1249,7 +1229,7 @@ class RRuleIterator implements Iterator
         return $recurrenceDays;
     }
 
-    protected function getMonths()
+    protected function getMonths(): array
     {
         $recurrenceMonths = [];
         foreach ($this->byMonth as $byMonth) {

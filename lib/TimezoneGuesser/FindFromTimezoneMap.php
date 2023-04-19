@@ -11,20 +11,20 @@ use DateTimeZone;
  */
 class FindFromTimezoneMap implements TimezoneFinder
 {
-    private $map = [];
+    private array $map = [];
 
-    private $patterns = [
+    private array $patterns = [
         '/^\((UTC|GMT)(\+|\-)[\d]{2}\:[\d]{2}\) (.*)/',
         '/^\((UTC|GMT)(\+|\-)[\d]{2}\.[\d]{2}\) (.*)/',
     ];
 
-    public function find(string $tzid, bool $failIfUncertain = false): ?DateTimeZone
+    public function find(string $tzid, bool $failIfUncertain = false): ?\DateTimeZone
     {
         $tzid = str_replace(".", "", $tzid);
 
         // Next, we check if the tzid is somewhere in our tzid map.
         if ($this->hasTzInMap($tzid)) {
-            return new DateTimeZone($this->getTzFromMap($tzid));
+            return new \DateTimeZone($this->getTzFromMap($tzid));
         }
 
         // Some Microsoft products prefix the offset first, so let's strip that off
@@ -36,7 +36,7 @@ class FindFromTimezoneMap implements TimezoneFinder
             }
             $tzidAlternate = $matches[3];
             if ($this->hasTzInMap($tzidAlternate)) {
-                return new DateTimeZone($this->getTzFromMap($tzidAlternate));
+                return new \DateTimeZone($this->getTzFromMap($tzidAlternate));
             }
         }
 
