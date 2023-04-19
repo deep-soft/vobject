@@ -254,7 +254,7 @@ class RRuleIterator implements \Iterator
      * recurrence rule. Will set the position of the iterator to the last occurrence before the requested date. If the
      * fast forwarding failed, the position will be reset.
      */
-    private function jumpForward(DateTimeInterface $dt)
+    private function jumpForward(\DateTimeInterface $dt)
     {
         $frequencyCoeff = $this->getFrequencyCoeff();
 
@@ -289,7 +289,7 @@ class RRuleIterator implements \Iterator
         isset($previousDate) && $this->currentDate = clone $previousDate;
 
         // We don't know the counter at this point anymore
-        $this->counter = NAN;
+        $this->counter = 2<<31;
 
         // It's possible that we miss the previous occurrence by jumping too much, in this case we reset the rrule and
         // do the normal forward.

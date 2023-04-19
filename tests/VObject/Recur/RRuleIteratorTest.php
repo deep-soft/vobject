@@ -44,7 +44,7 @@ class RRuleIteratorTest extends TestCase
                 '2011-10-22 00:00:00',
                 '2011-10-25 00:00:00',
             ],
-            'daily', null, 3, new DateTime('2011-10-25')
+            'daily', null, 3, new \DateTime('2011-10-25')
         );
     }
 
@@ -165,6 +165,10 @@ class RRuleIteratorTest extends TestCase
             '2022-03-15',
             [
             ],
+            'daily',
+            null,
+            7,
+            null,
             '2022-05-01'
         );
     }
@@ -410,7 +414,7 @@ class RRuleIteratorTest extends TestCase
                 '2021-03-10 00:00:00',
                 '2021-03-17 00:00:00',
             ],
-            'monthly', null, 1, new DateTime('2021-03-17')
+            'monthly', null, 1, new \DateTime('2021-03-17')
         );
     }
 
@@ -422,7 +426,7 @@ class RRuleIteratorTest extends TestCase
             [
                 '2021-02-10 00:00:00',
             ],
-            'monthly', null, 1, new DateTime('2021-03-17')
+            'monthly', null, 1, new \DateTime('2021-03-17')
         );
     }
 
@@ -753,7 +757,9 @@ class RRuleIteratorTest extends TestCase
                 '2006-01-01 14:53:11',
                 '2007-01-01 14:53:11',
                 '2008-01-02 14:53:11',
-            ]
+            ],
+            'yearly',
+            8,
         );
     }
 
@@ -849,7 +855,7 @@ class RRuleIteratorTest extends TestCase
             [
                 '2007-10-04 14:46:42',
             ],
-            'monthly', null, 1, new DateTime('2007-10-30 03:59:59')
+            'monthly', null, 1, new \DateTime('2007-10-30 03:59:59')
         );
     }
 
@@ -875,7 +881,7 @@ class RRuleIteratorTest extends TestCase
                 '2009-06-22 18:00:00',
                 '2009-06-29 18:00:00',
             ],
-            'weekly', null, 1, new DateTime('2009-07-04 20:59:59')
+            'weekly', null, 1, new \DateTime('2009-07-04 20:59:59')
         );
     }
 
@@ -1016,7 +1022,7 @@ class RRuleIteratorTest extends TestCase
             [
                 '2012-02-01 15:45:00',
             ],
-            'yearly', null, 1, new DateTime('2012-02-03 22:59:59'),
+            'yearly', null, 1, new \DateTime('2012-02-03 22:59:59'),
             '2012-01-29 23:00:00'
         );
     }
@@ -1035,6 +1041,10 @@ class RRuleIteratorTest extends TestCase
             '2022-03-03 15:45:00',
             [
             ],
+            null,
+            null,
+            null,
+            null,
             '2022-05-01'
         );
     }
@@ -1082,7 +1092,10 @@ class RRuleIteratorTest extends TestCase
         $this->parse(
             'FREQ=WEEKLY;INTERVAL=1;COUNT=4;BYDAY=0MO;WKST=SA',
             '2014-08-01 00:00:00',
-            []
+            [],
+            'weekly',
+            4,
+            1,
         );
     }
 
@@ -1102,7 +1115,7 @@ class RRuleIteratorTest extends TestCase
                 '2013-11-11 18:30:00',
                 '2013-11-18 18:30:00',
             ],
-            'weekly', null, 1, new DateTime('2013-11-18 18:30:00-0500'),
+            'weekly', null, 1, new \DateTime('2013-11-18 18:30:00-0500'),
             null,
             'America/New_York'
         );
@@ -1117,7 +1130,7 @@ class RRuleIteratorTest extends TestCase
             [
                 $dtstart,
             ],
-            'daily', null, 1, new DateTime($dtstart)
+            'daily', null, 1, new \DateTime($dtstart)
         );
     }
 

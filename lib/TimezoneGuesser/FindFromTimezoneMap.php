@@ -18,7 +18,7 @@ class FindFromTimezoneMap implements TimezoneFinder
         '/^\((UTC|GMT)(\+|\-)[\d]{2}\.[\d]{2}\) (.*)/',
     ];
 
-    public function find(string $tzid, bool $failIfUncertain = false): ?\DateTimeZone
+    public function find(string $tzid, ?bool $failIfUncertain = false): ?\DateTimeZone
     {
         $tzid = str_replace(".", "", $tzid);
 

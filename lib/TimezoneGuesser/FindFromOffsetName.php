@@ -8,7 +8,7 @@ use DateTimeZone;
 
 class FindFromOffsetName implements TimezoneFinder
 {
-    public static $offsetTimezones = [
+    public static array $offsetTimezones = [
         '+01:00' => 'Africa/Lagos',
         '+02:00' => 'Africa/Cairo',
         '+03:00' => 'Europe/Moscow',
@@ -35,7 +35,7 @@ class FindFromOffsetName implements TimezoneFinder
         '-11:00' => 'Pacific/Niue',
     ];
 
-    public function find(string $tzid, bool $failIfUncertain = false): ?DateTimeZone
+    public function find(string $tzid, ?bool $failIfUncertain = false): ?DateTimeZone
     {
         // only handle number timezone
         if (strlen($tzid) > 6) {

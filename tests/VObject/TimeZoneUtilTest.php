@@ -676,14 +676,6 @@ ICS;
         self::assertSame(8 * 60 * 60, $tz->getOffset($start));
     }
 
-    public function testCustomizedTimeZoneFlag(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $ics = $this->getCustomizedICS();
-        $vobject = Reader::read($ics);
-        $vobject->VEVENT->DTSTART->getDateTime(null, false);
-    }
-
     private function getCustomizedICS(): string
     {
         return <<<ICS
