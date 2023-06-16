@@ -16,7 +16,7 @@ class InvalidValueParamTest extends TestCase
             DTSTAMP:20230317T130521Z
             DTSTART;TZID=Europe/Paris:20170530T200000
             LAST-MODIFIED:20230316T155811Z
-            LOCATION;VALUE=ERROR:ERROR
+            LOCATION;VALUE=ERROR:EXAMPLE
             SEQUENCE:0
             STATUS:CONFIRMED
             SUMMARY:AG MP3
@@ -26,6 +26,6 @@ class InvalidValueParamTest extends TestCase
             ICS;
 
         $doc = Reader::read($event);
-        $this->assertEquals("LOCATION:ERROR\r\n", $doc->VEVENT->LOCATION->serialize());
+        $this->assertEquals("LOCATION:EXAMPLE\r\n", $doc->VEVENT->LOCATION->serialize());
     }
 }
