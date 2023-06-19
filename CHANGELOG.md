@@ -1,6 +1,10 @@
 ChangeLog
 =========
 
+4.24.0 (2023-06-19)
+-------------------
+* #87 Added whitelist for illegal values in parameter
+
 4.23.0 (2023-04-13)
 -------------------
 * #82 Modify TZID value for migration timezones 
