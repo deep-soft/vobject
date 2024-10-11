@@ -192,7 +192,7 @@ class Recur extends Property
 
             $parts = explode('=', $part);
 
-            if (count($parts) !== 2) {
+            if (2 !== count($parts)) {
                 throw new InvalidDataException('The supplied iCalendar RRULE part is incorrect: '.$part);
             }
 
