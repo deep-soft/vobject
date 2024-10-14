@@ -4,6 +4,7 @@ namespace Sabre\VObject\Property\ICalendar;
 
 use PHPUnit\Framework\TestCase;
 use Sabre\VObject\Component\VCalendar;
+use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\Node;
 use Sabre\VObject\Reader;
 
@@ -192,6 +193,15 @@ END:VCALENDAR
             $expected,
             $vcal
         );
+    }
+
+    public function testUnrepairableRRule(): void
+    {
+        $calendar = new VCalendar();
+
+        $this->expectException(InvalidDataException::class);
+
+        $property = $calendar->createProperty('RRULE', 'IAmNotARRule');
     }
 
     public function testValidateInvalidByMonthRruleWithRepair(): void
