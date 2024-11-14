@@ -31,6 +31,7 @@ return [
     'America/Pangnirtung',
     // Moved to backward in 2023a
     'America/Yellowknife',
+    // Moved to backward in 2024b
     'Asia/Choibalsan',
 
     // Original list
