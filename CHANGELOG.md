@@ -1,6 +1,9 @@
 ChangeLog
 =========
 
+4.33.0 (2024-11-14)
+* #112 Fix timezone alias
+
 4.32.0 (2024-11-06)
 -------------------
 * #109 Throw InvalidDataException when finding invalid RRULE part
